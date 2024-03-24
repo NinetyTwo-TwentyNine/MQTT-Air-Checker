@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/scrollingFragment">
+
+    <fragment
+        android:id="@+id/scrollingFragment"
+        android:name="com.example.mqtt.ui.ScrollingFragment"
+        android:label="fragment_scrolling"
+        tools:layout="@layout/fragment_scrolling" >
+        <action
+            android:id="@+id/action_scrollingFragment_to_scrollingFragment2"
+            app:destination="@id/scrollingFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/scrollingFragment2"
+        android:name="com.example.mqtt.ui.ScrollingFragment2"
+        android:label="fragment_scrolling2"
+        tools:layout="@layout/fragment_scrolling2" >
+        <action
+            android:id="@+id/action_scrollingFragment2_to_scrollingFragment"
+            app:popUpTo="@id/scrollingFragment"
+            app:popUpToInclusive="false"/>
+    </fragment>
+</navigation>

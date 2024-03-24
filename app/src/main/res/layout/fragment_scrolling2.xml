@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.ScrollingFragment2"
+    android:background="@color/white">
+
+    <View
+        android:id="@+id/gradientView"
+        android:layout_width="500dp"
+        android:layout_height="440dp"
+        android:background="@drawable/gradient_bg"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.49" >
+    </View>
+
+    <ImageView
+        android:id="@+id/connectionImage"
+        android:layout_width="126dp"
+        android:layout_height="96dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="52dp"
+        android:src="@drawable/wifi"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.skydoves.colorpickerview.ColorPickerView
+        android:id="@+id/colorWheel"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="88dp"
+        android:gravity="center"
+        android:paddingBottom="20dp"
+        app:palette="@drawable/palette"
+        app:alpha_selector="0.8"
+        app:alpha_flag="0.8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gradientView" />
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/imageView"-->
+    <!--        android:layout_width="35dp"-->
+    <!--        android:layout_height="35dp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:layout_constraintVertical_bias="0.477"-->
+    <!--        app:srcCompat="@drawable/full_moon_black_circle_icon_icons_com_64234" />-->
+
+    <com.skydoves.colorpickerview.sliders.AlphaSlideBar
+        android:id="@+id/brig_slide_bar"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="22dp"
+        app:borderColor_AlphaSlideBar="@android:color/darker_gray"
+        app:borderSize_AlphaSlideBar="5"
+        app:selector_AlphaSlideBar="@drawable/white_cicrle_bg"
+        app:layout_constraintTop_toBottomOf="@id/colorWheel"
+        app:layout_constraintBottom_toTopOf="@id/colorSendButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <Button
+        android:id="@+id/colorSendButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="44dp"
+        android:textAlignment="center"
+        android:text="Отправить цвет"
+        app:layout_constraintTop_toBottomOf="@id/colorWheel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <View
+        android:id="@+id/connectionStatusView"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/green_cicrle_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/connectionStatusText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Отключено"
+        android:textColor="@color/green"
+        app:layout_constraintBottom_toBottomOf="@id/connectionStatusView"
+        app:layout_constraintStart_toEndOf="@id/connectionStatusView"
+        app:layout_constraintTop_toTopOf="@id/connectionStatusView" />
+
+    <ImageView
+        android:id="@+id/arrowBackwards"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/baseline_arrow_back_24"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/connectionStatusText"
+        app:layout_constraintTop_toTopOf="@id/connectionStatusText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
