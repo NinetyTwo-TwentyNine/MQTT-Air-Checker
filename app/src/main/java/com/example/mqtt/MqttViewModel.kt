@@ -36,6 +36,16 @@ class MqttViewModel(): ViewModel() {
                     }
                 }
                 override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
+                    updateLiveData(powerOn, false)
+                    Log.d("MQTT_DEBUGGER", "MQTT connection was failed.")
+                    exception?.printStackTrace()
+
+                    try {
+                        mqttConnect()
+                    } catch (e: Exception) {
+                        Log.d("MQTT_DEBUGGER", "MQTT connection function call failed.")
+                        e.printStackTrace()
+                    }
                 }
             },
             object : MqttCallback {
@@ -50,7 +60,16 @@ class MqttViewModel(): ViewModel() {
                     }
                 }
 
-                override fun connectionLost(cause: Throwable?) {}
+                override fun connectionLost(cause: Throwable?) {
+                    Log.d("MQTT_DEBUGGER", "MQTT connection was lost.")
+                    cause?.printStackTrace()
+                    try {
+                        mqttConnect()
+                    } catch (e: Exception) {
+                        Log.d("MQTT_DEBUGGER", "MQTT connection function call failed.")
+                        e.printStackTrace()
+                    }
+                }
                 override fun deliveryComplete(token: IMqttDeliveryToken?) {}
             })
     }

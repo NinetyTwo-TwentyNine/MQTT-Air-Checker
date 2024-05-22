@@ -3,14 +3,15 @@ package com.example.mqtt.data
 object Constants {
     const val MQTT_SERVER_URI = "tcp://wqtt.ru"
     const val MQTT_SERVER_PORT = "5031"
-    const val MQTT_CLIENT_ID = "xdtcgfvgyjuhijokcfghjkj"
+
+    const val MQTT_CLIENT_ID = "xdtcgfvgyjuhijokcfghjkj323"
 
     const val MQTT_USER_NAME = "123"
     const val MQTT_USER_PASSWORD = "123"
 
-    private const val MQTT_TOPIC_MAIN = "airrefresher"
+    private const val MQTT_TOPIC_MAIN = "airhumidifier"
 
-    const val MQTT_TOPIC_POWER = "$MQTT_TOPIC_MAIN/power"
+    const val MQTT_TOPIC_POWER = "$MQTT_TOPIC_MAIN/power/mode"
 
     const val MQTT_TOPIC_COLOR = "$MQTT_TOPIC_MAIN/led/color"
     const val MQTT_TOPIC_BRIGHTNESS = "$MQTT_TOPIC_MAIN/led/brig"
