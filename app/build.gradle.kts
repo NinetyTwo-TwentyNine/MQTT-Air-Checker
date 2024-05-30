@@ -59,11 +59,12 @@ android {
 
 dependencies {
 
-    implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5")
+    //implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5")
     //implementation("org.eclipse.paho:org.eclipse.paho.android.service:1.1.1")
-    implementation("com.github.hannesa2:paho.mqtt.android:3.3.5")
+    implementation("com.github.hannesa2:paho.mqtt.android:4.2")
+    implementation ("androidx.legacy:legacy-support-v4:1.0.0")
 
-    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.core:core-ktx:1.6.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation(platform("androidx.compose:compose-bom:2023.08.00"))

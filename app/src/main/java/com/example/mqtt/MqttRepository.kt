@@ -1,14 +1,19 @@
 package com.example.mqtt
 
 import android.content.Context
-import info.mqtt.android.service.Ack
 import info.mqtt.android.service.MqttAndroidClient
-import org.eclipse.paho.client.mqttv3.*
+import org.eclipse.paho.client.mqttv3.IMqttActionListener
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
+import org.eclipse.paho.client.mqttv3.IMqttToken
+import org.eclipse.paho.client.mqttv3.MqttCallback
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions
+import org.eclipse.paho.client.mqttv3.MqttException
+import org.eclipse.paho.client.mqttv3.MqttMessage
 
 class MqttRepository(context: Context,
                      serverURI: String,
                      clientID: String = "") {
-    private var mqttClient = MqttAndroidClient(context, serverURI, clientID, Ack.AUTO_ACK)
+    private var mqttClient = MqttAndroidClient(context, serverURI, clientID)
 
     private val defaultCbConnect = object : IMqttActionListener {
         override fun onSuccess(asyncActionToken: IMqttToken?) {
