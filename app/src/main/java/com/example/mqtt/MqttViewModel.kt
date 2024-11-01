@@ -11,6 +11,8 @@ import com.example.mqtt.data.Constants.MQTT_TOPIC_LIST
 import com.example.mqtt.data.Constants.MQTT_TOPIC_TEMPERATURE
 import com.example.mqtt.data.Constants.MQTT_USER_NAME
 import com.example.mqtt.data.Constants.MQTT_USER_PASSWORD
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import org.eclipse.paho.client.mqttv3.IMqttActionListener
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.IMqttToken
@@ -50,13 +52,15 @@ class MqttViewModel(): ViewModel() {
             },
             object : MqttCallback {
                 override fun messageArrived(topic: String?, message: MqttMessage?) {
-                    if(topic == MQTT_TOPIC_TEMPERATURE) {
-                        powerOn.value = true
-                        updateLiveData(tempText, "$message°C")
-                    }
-                    if(topic == MQTT_TOPIC_HUMIDITY) {
-                        powerOn.value = true
-                        updateLiveData(humidText, "$message%")
+                    when (topic) {
+                        MQTT_TOPIC_TEMPERATURE -> {
+                            updateLiveData(powerOn, true, launchCallback = false)
+                            updateLiveData(tempText, "$message°C")
+                        }
+                        MQTT_TOPIC_HUMIDITY -> {
+                            updateLiveData(powerOn, true, launchCallback = false)
+                            updateLiveData(humidText, "$message%")
+                        }
                     }
                 }
 
@@ -74,9 +78,13 @@ class MqttViewModel(): ViewModel() {
             })
     }
 
-    private fun <T> updateLiveData(liveData: MutableLiveData<T>, message: T) {
-        liveData.value = message
-        liveData.postValue(message)
+    private fun <T> updateLiveData(liveData: MutableLiveData<T>, message: T, launchCallback: Boolean = true) {
+        MainScope().launch {
+            liveData.value = message
+            if (launchCallback) {
+                liveData.postValue(message)
+            }
+        }
     }
 
 
