@@ -8,6 +8,7 @@ import com.example.mqtt.data.Constants.MQTT_TOPIC_BRIGHTNESS
 import com.example.mqtt.data.Constants.MQTT_TOPIC_COLOR
 import com.example.mqtt.data.Constants.MQTT_TOPIC_HUMIDITY
 import com.example.mqtt.data.Constants.MQTT_TOPIC_LIST
+import com.example.mqtt.data.Constants.MQTT_TOPIC_POWER
 import com.example.mqtt.data.Constants.MQTT_TOPIC_TEMPERATURE
 import com.example.mqtt.data.Constants.MQTT_USER_NAME
 import com.example.mqtt.data.Constants.MQTT_USER_PASSWORD
@@ -25,9 +26,10 @@ class MqttViewModel(): ViewModel() {
     lateinit var mqttServer: MqttRepository
     var tempText: MutableLiveData<String> = MutableLiveData()
     var humidText: MutableLiveData<String> = MutableLiveData()
-    var powerOn: MutableLiveData<Boolean> = MutableLiveData(false)
-    var colorVal: String = "#FFFFFF"
-    var brigVal: Int = 255
+    var connectionOn: MutableLiveData<Boolean> = MutableLiveData(false)
+    var steamOn: MutableLiveData<Boolean> = MutableLiveData(false)
+    private var colorVal: String = "#FFFFFF"
+    private var brigVal: Int = 255
 
     fun mqttConnect() {
         mqttServer.connect(MQTT_USER_NAME, MQTT_USER_PASSWORD,
@@ -38,7 +40,7 @@ class MqttViewModel(): ViewModel() {
                     }
                 }
                 override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
-                    updateLiveData(powerOn, false)
+                    updateLiveData(connectionOn, false)
                     Log.d("MQTT_DEBUGGER", "MQTT connection was failed.")
                     exception?.printStackTrace()
 
@@ -53,12 +55,15 @@ class MqttViewModel(): ViewModel() {
             object : MqttCallback {
                 override fun messageArrived(topic: String?, message: MqttMessage?) {
                     when (topic) {
+                        MQTT_TOPIC_POWER -> {
+                            updateLiveData(steamOn, message.toString().toBoolean())
+                        }
                         MQTT_TOPIC_TEMPERATURE -> {
-                            updateLiveData(powerOn, true, launchCallback = false)
+                            updateLiveData(connectionOn, true, launchCallback = false)
                             updateLiveData(tempText, "$message°C")
                         }
                         MQTT_TOPIC_HUMIDITY -> {
-                            updateLiveData(powerOn, true, launchCallback = false)
+                            updateLiveData(connectionOn, true, launchCallback = false)
                             updateLiveData(humidText, "$message%")
                         }
                     }
@@ -136,8 +141,8 @@ class MqttViewModel(): ViewModel() {
         }
     }
 
-    fun updateConnectionText(power: Boolean = powerOn.value!!, connectionText: TextView) {
-        if (power) {
+    fun updateConnectionText(connection: Boolean = connectionOn.value!!, connectionText: TextView) {
+        if (connection) {
             connectionText.text = "Подключено"
         } else {
             connectionText.text = "Отключено"

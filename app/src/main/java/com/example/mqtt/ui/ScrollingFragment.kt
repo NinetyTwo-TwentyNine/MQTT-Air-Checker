@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.findNavController
 import com.example.mqtt.MqttViewModel
 import com.example.mqtt.R
@@ -31,6 +30,10 @@ class ScrollingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModelClient.connectionOn.observe(viewLifecycleOwner) {
+            viewModelClient.updateConnectionText(connection = it, connectionText = binding.connectionStatusText)
+        }
+
         viewModelClient.tempText.observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.temperatureText.text = it
@@ -44,15 +47,14 @@ class ScrollingFragment : Fragment() {
             }
         }
 
-        viewModelClient.powerOn.observe(viewLifecycleOwner) {
+        viewModelClient.steamOn.observe(viewLifecycleOwner) {
             binding.powerImage.isEnabled = true
-            viewModelClient.updateConnectionText(power = it, connectionText = binding.connectionStatusText)
         }
-
         binding.powerImage.setOnClickListener{
             it.isEnabled = false
-            viewModelClient.mqttPublish(MQTT_TOPIC_POWER, "${!viewModelClient.powerOn.value!!}")
+            viewModelClient.mqttPublish(MQTT_TOPIC_POWER, "${!viewModelClient.steamOn.value!!}")
         }
+
         binding.arrowForward.setOnClickListener {
             requireView().findNavController()
                 .navigate(R.id.action_scrollingFragment_to_scrollingFragment2)

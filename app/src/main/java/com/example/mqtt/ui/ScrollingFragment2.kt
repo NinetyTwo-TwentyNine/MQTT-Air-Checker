@@ -30,11 +30,10 @@ class ScrollingFragment2 : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModelClient.powerOn.observe(viewLifecycleOwner) {
+        viewModelClient.connectionOn.observe(viewLifecycleOwner) {
             binding.connectionImage.isEnabled = true
-            viewModelClient.updateConnectionText(power = it, connectionText = binding.connectionStatusText)
+            viewModelClient.updateConnectionText(connection = it, connectionText = binding.connectionStatusText)
         }
-
         binding.connectionImage.setOnClickListener{
             it.isEnabled = false
             viewModelClient.mqttConnect()
